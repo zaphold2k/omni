@@ -7,11 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_IMAGE: omni
-      DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.TOKEN }}
-      DOCKER_TARGET_PLATFORM: linux/arm64,linux/arm32
     steps:
     - name: Checkout the code
       uses: actions/checkout@v1
@@ -25,8 +20,8 @@ jobs:
     - name: Login to Dockerhub
       uses: docker/login-action@v3
       with:
-        username: ${{ DOCKER_USERNAME }}
-        password: ${{ DOCKER_PASSWORD }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push
       uses: docker/build-push-action@v5
