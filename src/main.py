@@ -8,8 +8,15 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 influx_url = os.getenv('OMNI_INFLUX_URL')
 influx_token = os.getenv('OMNI_INFLUX_TOKEN')
 influx_bucket = os.getenv('OMNI_INFLUX_BUCKET')
+influx_user = os.getenv('OMNI_INFLUX_USER')
+influx_password = os.getenv('OMNI_INFLUX_PASSWORD')
 influx_org = os.getenv('OMNI_INFLUX_ORG')
 
+
+if influx_token:
+    client = InfluxDBClient(url=influx_url, token=influx_token)
+elif influx_user and influx_password:
+    client = InfluxDBClient(url=influx_url, token=influx_token, org=influx_org, username=influx_user, password=influx_password)
 
 client = InfluxDBClient(url=influx_url, token=influx_token)
 write_api = client.write_api(write_options=SYNCHRONOUS)
